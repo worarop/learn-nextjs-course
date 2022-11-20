@@ -3,7 +3,7 @@ import AppHeader from "../components/AppHeader"
 export default function ContactPage() {
 
     const fullname = "Potae"
-    const age = 28
+    let age = 28
     const showDate = <p>{new Date().getFullYear()}</p>
     const isLogin = true
 
