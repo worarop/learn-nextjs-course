@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import AppNavbar from '../components/AppNavbar'
 
 export default function Home() {
   return (
@@ -10,8 +9,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <AppNavbar/>
-      <hr/>
       <h1>Home Page</h1>
     </div>
   )

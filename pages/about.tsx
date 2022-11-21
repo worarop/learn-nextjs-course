@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import reactLogo from "../public/react_logo.png"
-import AppNavbar from "../components/AppNavbar"
+import { MdHome } from "react-icons/md"
 
 export default function AboutPage(){
 
@@ -30,9 +30,7 @@ export default function AboutPage(){
 
     return(
         <div>
-            <AppNavbar/>
-            <hr/>
-            <h1>About Page {process.env.NEXT_PUBLIC_APP_NAME}</h1>
+            <h1>  <MdHome size={40}/> About Page {process.env.NEXT_PUBLIC_APP_NAME}</h1>
             <Image src={reactLogo} alt="React Logo" />
             <hr/>
             <Image src="/me.jpg" alt="Potae" width={100} height={100} />
