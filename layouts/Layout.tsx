@@ -1,8 +1,13 @@
+import { type } from "os";
 import { ReactNode } from "react";
 import AppFooter from "../components/AppFooter";
 import AppNavbar from "../components/AppNavbar"
 
-const Layout = ({children}: {children: ReactNode}) => {
+type LayoutProps = {
+    children: ReactNode
+}
+
+const Layout = ({children}: LayoutProps) => {
     return (
         <>
             <AppNavbar/>
