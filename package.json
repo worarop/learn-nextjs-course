@@ -23,6 +23,7 @@
     "eslint-config-next": "13.0.3",
     "framer-motion": "^6.5.1",
     "next": "13.0.3",
+    "oracledb": "https://github.com/oracle/node-oracledb/releases/download/v5.5.0/oracledb-src-5.5.0.tgz",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.6.0",

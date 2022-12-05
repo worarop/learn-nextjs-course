@@ -8,6 +8,7 @@ import { Version } from '../types/version.types'
 import { getProduct } from '../services/product.service'
 import { Product } from '../types/product.types'
 import { PHASE_PRODUCTION_SERVER } from 'next/dist/shared/lib/constants'
+import React from 'react'
 
 type Data = { 
     message: string
@@ -49,8 +50,8 @@ const ProductPage: NextPageWithLayout = ({ data, api, products }: InferGetServer
         {
           products.map((item, index) => {
             return(
-              <>
-                <Card maxW='sm' key={item.id}>
+              <React.Fragment key={item.id}>
+                <Card maxW='sm'>
                   <CardBody>
                     <Image
                       src={item.picture}
@@ -79,7 +80,7 @@ const ProductPage: NextPageWithLayout = ({ data, api, products }: InferGetServer
                     </ButtonGroup>
                   </CardFooter>
                 </Card>
-              </>
+              </React.Fragment>
             )
           })
         }
