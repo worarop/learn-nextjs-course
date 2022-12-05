@@ -19,18 +19,21 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Links = [
     {label: "Home", href: "/"},
+    {label: "Product (SSR)", href: "/product"},
     {label: "Map", href: "/map"},
 ]
 
 type NavLinkProps = {
     href: string,
+    classActive: string,
     children: ReactNode
 }
 
-const NavLink = ({ href, children }: NavLinkProps ) => (
+const NavLink = ({ href, classActive, children }: NavLinkProps ) => (
 <Link href={href} passHref legacyBehavior>
   <CLink
     px={2}
@@ -40,6 +43,7 @@ const NavLink = ({ href, children }: NavLinkProps ) => (
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
+    className={classActive}
     >
     {children}
   </CLink>
@@ -47,7 +51,8 @@ const NavLink = ({ href, children }: NavLinkProps ) => (
 );
 
 export default function AppNavbar() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const router = useRouter()
 
   return (
     <>
@@ -67,7 +72,7 @@ export default function AppNavbar() {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
               {Links.map((menu) => (
-                <NavLink key={menu.label} href={menu.href}>
+                <NavLink key={menu.label} href={menu.href} classActive={router.pathname === menu.href ? "menu-active" : ""}>
                     <Text>{menu.label}</Text>
                 </NavLink>
                 ))}
@@ -102,7 +107,7 @@ export default function AppNavbar() {
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map((menu) => (
-                <NavLink key={menu.label} href={menu.href}>
+                <NavLink key={menu.label} href={menu.href} classActive={router.pathname === menu.href ? "menu-active" : ""}>
                     <Text>{menu.label}</Text>
                 </NavLink>
                 ))}
@@ -111,7 +116,6 @@ export default function AppNavbar() {
         ) : null}
       </Box>
 
-      <Box p={4}>Main Content Here</Box>
     </>
   );
 }

@@ -1,9 +1,14 @@
 import type { ReactElement } from 'react'
+import AppHero from '../components/AppHero'
 import Layout from '../layouts/Layout'
 import type { NextPageWithLayout } from './_app'
 
 const HomePage: NextPageWithLayout = () => {
-  return <p>Home Page</p>
+  return (
+    <>
+      <AppHero/>
+    </>
+  )
 }
 
 HomePage.getLayout = function getLayout(page: ReactElement) {
