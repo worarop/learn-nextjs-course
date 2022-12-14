@@ -1,5 +1,7 @@
 import { DataSource } from "typeorm"
+import { Blog } from "../models/blog.model"
 import { Province } from "../models/province.model"
+import { User } from "../models/user.model"
 
 const db = new DataSource({
     type: "oracle",
@@ -9,7 +11,7 @@ const db = new DataSource({
     password: process.env.ORACLE_PASSWORD,
     serviceName: process.env.ORACLE_SERVICE_NAME,
     synchronize: process.env.NODE_ENV !== "production",
-    entities: [Province],
+    entities: [Province, User, Blog],
 })
 
 db.initialize()

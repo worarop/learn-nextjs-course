@@ -24,7 +24,9 @@ import { useRouter } from 'next/router';
 const Links = [
     {label: "Home", href: "/"},
     {label: "Product (SSR)", href: "/product"},
-    {label: "Map", href: "/map"},
+    {label: "Map (SSG)", href: "/map"},
+    {label: "Province (SWR)", href: "/province"},
+    {label: "Login", href: "/login"},
 ]
 
 type NavLinkProps = {
@@ -78,8 +80,8 @@ export default function AppNavbar() {
                 ))}
             </HStack>
           </HStack>
-          <Flex alignItems={'center'}>
-            <Menu>
+          {/* <Flex alignItems={'center'}> */}
+            {/* <Menu>
               <MenuButton
                 as={Button}
                 rounded={'full'}
@@ -99,8 +101,8 @@ export default function AppNavbar() {
                 <MenuDivider />
                 <MenuItem>Link 3</MenuItem>
               </MenuList>
-            </Menu>
-          </Flex>
+            </Menu> */}
+          {/* </Flex> */}
         </Flex>
 
         {isOpen ? (

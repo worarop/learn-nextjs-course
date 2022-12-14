@@ -9,7 +9,7 @@ import {
   VStack,
   Icon,
   useColorModeValue,
-  Link,
+  Link as CLink,
   Drawer,
   DrawerContent,
   Text,
@@ -31,17 +31,20 @@ import {
   FiMenu,
   FiBell,
   FiChevronDown,
-  FiUser
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
+import Link from "next/link";
+import { useRouter } from 'next/router';
+import { signOut, useSession } from 'next-auth/react'
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
+  link: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
-  { name: 'User', icon: FiUser },
+  { name: 'Home', icon: FiHome, link: "/dashboard" },
+  { name: 'User', icon: FiTrendingUp, link: "/dashboard/user" }
 ];
 
 export default function DLayout({
@@ -82,6 +85,7 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const router = useRouter();
   return (
     <Box
       transition="3s ease"
@@ -94,12 +98,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Dash board
+          Logo
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} link={link.link} active={router.pathname === link.link ? "menu-active" : ""}>
           {link.name}
         </NavItem>
       ))}
@@ -110,10 +114,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 interface NavItemProps extends FlexProps {
   icon: IconType;
   children: ReactNode;
+  link: string;
+  active: string;
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, link, active, ...rest }: NavItemProps) => {
   return (
-    <Link href="#" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+    <Link href={link} passHref legacyBehavior>
+    <CLink style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
       <Flex
         align="center"
         p="4"
@@ -121,6 +128,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         borderRadius="lg"
         role="group"
         cursor="pointer"
+        className={active}
         _hover={{
           bg: 'cyan.400',
           color: 'white',
@@ -138,6 +146,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         )}
         {children}
       </Flex>
+    </CLink>
     </Link>
   );
 };
@@ -146,6 +155,7 @@ interface MobileProps extends FlexProps {
   onOpen: () => void;
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+  const { data: session } = useSession()
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -170,7 +180,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         fontSize="2xl"
         fontFamily="monospace"
         fontWeight="bold">
-        Dash board
+        Logo
       </Text>
 
       <HStack spacing={{ base: '0', md: '6' }}>
@@ -198,7 +208,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2">
-                  <Text fontSize="sm">Justina Clark</Text>
+                  {
+                    session?.user && <Text>{session.user.name}</Text>
+                  }
                   <Text fontSize="xs" color="gray.600">
                     Admin
                   </Text>
@@ -215,7 +227,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={() => {
+                signOut({callbackUrl: "/"})
+              }}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
